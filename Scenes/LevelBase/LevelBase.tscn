@@ -1,0 +1,28 @@
+[gd_scene format=3 uid="uid://cks684nwp21js"]
+
+[ext_resource type="Script" uid="uid://c532fpfc0w364" path="res://Scenes/LevelBase/LevelBase.cs" id="1_3lxj6"]
+[ext_resource type="Texture2D" uid="uid://d0h8tl5wxu6iu" path="res://Assets/scene/colored_castle.png" id="1_5ufo3"]
+[ext_resource type="PackedScene" uid="uid://hry4tlce2bq2" path="res://Scenes/Animal/Animal.tscn" id="2_bgw71"]
+[ext_resource type="PackedScene" uid="uid://uidfsm6s7nw4" path="res://Scenes/Water/Water.tscn" id="3_78m1b"]
+[ext_resource type="PackedScene" uid="uid://c7l62l6368342" path="res://Scenes/UserInterface/UserInterface.tscn" id="5_lmtt4"]
+
+[node name="LevelBase" type="Node" unique_id=861973633 node_paths=PackedStringArray("_spawnMarker")]
+script = ExtResource("1_3lxj6")
+_animalScene = ExtResource("2_bgw71")
+_spawnMarker = NodePath("AnimalStart")
+
+[node name="TextureRect" type="TextureRect" parent="." unique_id=1965304883]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("1_5ufo3")
+
+[node name="Water" parent="." unique_id=1752082742 instance=ExtResource("3_78m1b")]
+position = Vector2(583, 610)
+
+[node name="AnimalStart" type="Marker2D" parent="." unique_id=511770057]
+position = Vector2(149, 303)
+
+[node name="UserInterface" parent="." unique_id=720528331 instance=ExtResource("5_lmtt4")]

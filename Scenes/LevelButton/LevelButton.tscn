@@ -1,0 +1,96 @@
+[gd_scene format=3 uid="uid://4tij1vvjmvs"]
+
+[ext_resource type="Texture2D" uid="uid://bbmuewb6qb7ih" path="res://Assets/ui/panel_beige.png" id="1_145gk"]
+[ext_resource type="LabelSettings" uid="uid://d1oc2n0ermxmg" path="res://Scenes/Resources/LabelSettingswhite.tres" id="2_3r2e7"]
+[ext_resource type="Script" uid="uid://foeravn2tj54" path="res://Scenes/LevelButton/LevelButton.cs" id="2_anpwf"]
+[ext_resource type="LabelSettings" uid="uid://gpeo3d63ilwt" path="res://Scenes/Resources/LabelSettingswhite28.tres" id="3_anpwf"]
+
+[sub_resource type="Animation" id="Animation_anpwf"]
+resource_name = "ButtonHover"
+length = 0.4
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.2, 0.4),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector2(1, 1), Vector2(1.1, 1.1), Vector2(1.2, 1.2)]
+}
+
+[sub_resource type="Animation" id="Animation_uqdhg"]
+length = 0.2
+step = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector2(1.2, 1.2), Vector2(1.1, 1.1), Vector2(1, 1)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_uqdhg"]
+_data = {
+&"ButtonHover": SubResource("Animation_anpwf"),
+&"RESET": SubResource("Animation_uqdhg")
+}
+
+[node name="LevelButton" type="TextureButton" unique_id=947074252 node_paths=PackedStringArray("_animationPlayer", "_levelLabel")]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -50.0
+offset_top = -50.0
+offset_right = 50.0
+offset_bottom = 50.0
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(1.2, 1.2)
+pivot_offset = Vector2(50, 50)
+size_flags_horizontal = 4
+size_flags_vertical = 4
+texture_normal = ExtResource("1_145gk")
+script = ExtResource("2_anpwf")
+_animationPlayer = NodePath("AnimationPlayer")
+_levelLabel = NodePath("VBoxContainer/LevelLabel")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="." unique_id=365491981]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -25.0
+offset_top = -24.5
+offset_right = 25.0
+offset_bottom = 24.5
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Spacer" type="Control" parent="VBoxContainer" unique_id=909645176]
+layout_mode = 2
+
+[node name="LevelLabel" type="Label" parent="VBoxContainer" unique_id=1712111500]
+layout_mode = 2
+size_flags_horizontal = 4
+text = "23"
+label_settings = ExtResource("2_3r2e7")
+
+[node name="ScoreLabel" type="Label" parent="VBoxContainer" unique_id=200710845]
+layout_mode = 2
+text = "9999"
+label_settings = ExtResource("3_anpwf")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=1950581298]
+libraries/ = SubResource("AnimationLibrary_uqdhg")
