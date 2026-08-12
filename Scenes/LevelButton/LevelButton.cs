@@ -8,12 +8,14 @@ public partial class LevelButton : TextureButton
 	[Export] private int _levelNumber;
 
 	[Export] private Label _levelLabel;
+	[Export] private Label _scoreLabel;
 	public override void _Ready()
 	{
 		MouseEntered += _OnMouseEntered;
 		MouseExited += _OnMouseExited;
 		Pressed += _OnPressed;
 		_levelLabel.Text = $"{_levelNumber}";
+		_scoreLabel.Text = $"{ScoreManager.Instance.LevelScores.GetBestScore(_levelNumber).ToString("D3")}";
 	}
 
     // Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -30,6 +32,7 @@ public partial class LevelButton : TextureButton
 
 	private void _OnPressed()
 	{
+		ScoreManager.LevelSelected = _levelNumber;
 		// _animationPlayer.Play("ButtonPressed");
 		GetTree().ChangeSceneToFile($"res://Scenes/LevelBase/Level{_levelNumber}.tscn");
 	}

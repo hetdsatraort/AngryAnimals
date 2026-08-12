@@ -43,7 +43,7 @@ _data = {
 &"RESET": SubResource("Animation_uqdhg")
 }
 
-[node name="LevelButton" type="TextureButton" unique_id=947074252 node_paths=PackedStringArray("_animationPlayer", "_levelLabel")]
+[node name="LevelButton" type="TextureButton" unique_id=947074252 node_paths=PackedStringArray("_animationPlayer", "_levelLabel", "_scoreLabel")]
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
@@ -63,6 +63,7 @@ texture_normal = ExtResource("1_145gk")
 script = ExtResource("2_anpwf")
 _animationPlayer = NodePath("AnimationPlayer")
 _levelLabel = NodePath("VBoxContainer/LevelLabel")
+_scoreLabel = NodePath("VBoxContainer/ScoreLabel")
 
 [node name="VBoxContainer" type="VBoxContainer" parent="." unique_id=365491981]
 layout_mode = 1

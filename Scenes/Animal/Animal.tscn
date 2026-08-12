@@ -5,6 +5,7 @@
 [ext_resource type="AudioStream" uid="uid://b5f5seu34mi1f" path="res://Assets/audio/stretch2.ogg" id="2_lib84"]
 [ext_resource type="AudioStream" uid="uid://bx43ahcn8xrer" path="res://Assets/audio/catapult.ogg" id="3_oryip"]
 [ext_resource type="AudioStream" uid="uid://bmu243wuhmcrh" path="res://Assets/audio/kick_wood.ogg" id="4_x85cc"]
+[ext_resource type="Texture2D" uid="uid://ld1ucjqkwowc" path="res://Assets/items/arrow.png" id="6_x85cc"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_lib84"]
 bounce = 0.3
@@ -12,7 +13,7 @@ bounce = 0.3
 [sub_resource type="CircleShape2D" id="CircleShape2D_vqphk"]
 radius = 19.0
 
-[node name="Animal" type="RigidBody2D" unique_id=407713346 node_paths=PackedStringArray("_label", "_launchSound", "_kickSound", "_stretchSound")]
+[node name="Animal" type="RigidBody2D" unique_id=407713346 node_paths=PackedStringArray("_label", "_arrowSprite", "_launchSound", "_kickSound", "_stretchSound")]
 input_pickable = true
 physics_material_override = SubResource("PhysicsMaterial_lib84")
 freeze = true
@@ -20,6 +21,7 @@ contact_monitor = true
 max_contacts_reported = 1
 script = ExtResource("1_oryip")
 _label = NodePath("DebugLabel")
+_arrowSprite = NodePath("ArrowSprite")
 _launchSound = NodePath("LaunchSound")
 _kickSound = NodePath("KickSound")
 _stretchSound = NodePath("StretchSound")
@@ -48,3 +50,8 @@ offset_bottom = -119.0
 theme_override_constants/outline_size = 14
 theme_override_font_sizes/font_size = 24
 text = "asasasas"
+
+[node name="ArrowSprite" type="Sprite2D" parent="." unique_id=1886108786]
+scale = Vector2(0.3, 0.3)
+texture = ExtResource("6_x85cc")
+offset = Vector2(150, 0)

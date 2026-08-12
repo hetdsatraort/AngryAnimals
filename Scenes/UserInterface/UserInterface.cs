@@ -16,6 +16,7 @@ public partial class UserInterface : Control
 		OnAnimalLaunched();
 		SignalHub.Instance.AnimalLaunched += OnAnimalLaunched;
 		SignalHub.Instance.CupDestroyed += OnCupDestroyed;
+		_levelLabel.Text = $"Level {ScoreManager.LevelSelected}";
 	}
 
     private void OnCupDestroyed(int cupsRemaining)
@@ -25,6 +26,7 @@ public partial class UserInterface : Control
 		{
 			_levelCompleteContainer.Show();
 			_levelCompleteSound.Play();
+			ScoreManager.SetScoreForCurrentLevel(_attempts);
 		}
 	}
 

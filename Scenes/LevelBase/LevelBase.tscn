@@ -4,11 +4,13 @@
 [ext_resource type="Texture2D" uid="uid://d0h8tl5wxu6iu" path="res://Assets/scene/colored_castle.png" id="1_5ufo3"]
 [ext_resource type="PackedScene" uid="uid://hry4tlce2bq2" path="res://Scenes/Animal/Animal.tscn" id="2_bgw71"]
 [ext_resource type="PackedScene" uid="uid://uidfsm6s7nw4" path="res://Scenes/Water/Water.tscn" id="3_78m1b"]
+[ext_resource type="PackedScene" uid="uid://cs25yy3dbkrts" path="res://Scenes/Main/Main.tscn" id="3_ooqsx"]
 [ext_resource type="PackedScene" uid="uid://c7l62l6368342" path="res://Scenes/UserInterface/UserInterface.tscn" id="5_lmtt4"]
 
 [node name="LevelBase" type="Node" unique_id=861973633 node_paths=PackedStringArray("_spawnMarker")]
 script = ExtResource("1_3lxj6")
 _animalScene = ExtResource("2_bgw71")
+_mainScene = ExtResource("3_ooqsx")
 _spawnMarker = NodePath("AnimalStart")
 
 [node name="TextureRect" type="TextureRect" parent="." unique_id=1965304883]

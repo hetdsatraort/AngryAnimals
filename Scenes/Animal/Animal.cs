@@ -7,9 +7,11 @@ public partial class Animal : RigidBody2D
 	private Vector2 DRAG_LIM_MAX = new Vector2(0, 60);
 
 	private const float IMPULSE_MULTIPLIER = -25f;
+	private const float IMPULSE_MAX = 2000f;
 
 
 	[Export] private Label _label;
+	[Export] private Sprite2D _arrowSprite;
 	[Export] private AudioStreamPlayer2D _launchSound;
 	[Export] private AudioStreamPlayer2D _kickSound;
 	[Export] private AudioStreamPlayer2D _stretchSound;
@@ -20,14 +22,19 @@ public partial class Animal : RigidBody2D
 	private Vector2 _dragStart = Vector2.Zero;
 	private Vector2 _draggedVector = Vector2.Zero;
 	private Vector2 _start = Vector2.Zero;
+	private float _arrowScaleX = 0.00f;
 	public override void _Ready()
 	{
 		InputEvent += OnInputEvent;
 		_start = Position;
 		SleepingStateChanged += OnSleepingStateChanged;
+		_arrowScaleX = _arrowSprite.Scale.X;
+		_arrowSprite.Hide();
+		BodyEntered += OnBodyEntered;
 	}
 
     // Called every frame. 'delta' is the elapsed time since the previous frame.
+
 
     public override void _PhysicsProcess(double delta)
 	{
@@ -45,10 +52,20 @@ public partial class Animal : RigidBody2D
 
 	private void UpdateDebug()
 	{
-		string ds = $"SL:{Sleeping} FR:{Freeze}\n";
-		ds += $"Drag:{_isDragging} DragStart:{_dragStart} Start:{_start}\n";
-		ds += $"DraggedVector:{_draggedVector} Position:{Position}\n";
+		string ds = $"";
+		// string ds = $"SL:{Sleeping} FR:{Freeze}\n";
+		// ds += $"Drag:{_isDragging} DragStart:{_dragStart} Start:{_start}\n";
+		// ds += $"DraggedVector:{_draggedVector} Position:{Position}\n";
+		ds += $"DraggedVector:{_draggedVector}";
 		_label.Text = ds;
+	}
+
+	private void ScaleArrow()
+	{
+		var fraction = CalculateImpulse().Length() / IMPULSE_MAX;
+		fraction = Mathf.Clamp(fraction, 0.0f, 1.0f);
+		_arrowSprite.Scale = new Vector2(Mathf.Lerp(_arrowScaleX, _arrowScaleX * 2, fraction), _arrowSprite.Scale.Y);
+		_arrowSprite.Rotation = (_start - Position).Angle();
 	}
 
 	private Vector2 CalculateImpulse()
@@ -62,6 +79,7 @@ public partial class Animal : RigidBody2D
 		_isDragging = false;
 		Freeze = false;
 		_launchSound.Play();
+		_arrowSprite.Hide();
 		ApplyCentralImpulse(CalculateImpulse());
 		SignalHub.EmitOnAnimalLaunched();
 	}
@@ -70,6 +88,7 @@ public partial class Animal : RigidBody2D
 	{
 		_isDragging = true;
 		_dragStart = GetGlobalMousePosition();
+		_arrowSprite.Show();
 	}
 
 	private void HandleDragging() 
@@ -77,9 +96,18 @@ public partial class Animal : RigidBody2D
 		if (_isDragging)
 		{
 			Vector2 currentMouse = GetGlobalMousePosition();
-			_draggedVector = currentMouse - _dragStart;
-			_draggedVector = _draggedVector.Clamp(DRAG_LIM_MIN, DRAG_LIM_MAX);
+			Vector2 _newDraggedVector = currentMouse - _dragStart;
+			_newDraggedVector = _newDraggedVector.Clamp(DRAG_LIM_MIN, DRAG_LIM_MAX);
+
+			if((_draggedVector - _newDraggedVector).Length() > 0 && !_stretchSound.Playing)
+			{
+				_stretchSound.Play();
+			}
+
+			_draggedVector = _newDraggedVector;
+
 			Position = _start + _draggedVector;
+			ScaleArrow();
 		}
 	}
 
@@ -123,4 +151,13 @@ public partial class Animal : RigidBody2D
 			}
 		}
 	}
+
+	
+    private void OnBodyEntered(Node body)
+    {
+        if (body is Cup && !_kickSound.Playing)
+		{
+			_kickSound.Play();
+		}
+    }
 }

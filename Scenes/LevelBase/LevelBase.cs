@@ -4,6 +4,7 @@ using System;
 public partial class LevelBase : Node
 {
 	[Export] private PackedScene _animalScene;
+	[Export] private PackedScene _mainScene;
 	[Export] private Marker2D _spawnMarker;
 	// Called when the node enters the scene tree for the first time.
 
@@ -18,6 +19,13 @@ public partial class LevelBase : Node
 		SignalHub.Instance.AnimalDied += SpawnAnimal;
 		SpawnAnimal();
 	}
+    public override void _UnhandledInput(InputEvent @event)
+    {
+        if(@event.IsActionPressed("ui_cancel"))
+		{
+			GetTree().ChangeSceneToPacked(_mainScene);
+		}
+    }
 
 	private void SpawnAnimal()
 	{
